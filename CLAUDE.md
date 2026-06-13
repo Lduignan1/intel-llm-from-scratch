@@ -32,3 +32,4 @@ The notebook builds the model incrementally, mirroring the book's chapters. Sect
 
 - Versioned class names (`...V1`, `...V2`, `_v1`, `_v2`) are intentional — they show successive implementations of the same concept. Don't rename or merge them.
 - Code targets Intel hardware; when adding device/accelerator code, prefer Intel paths (`torch.xpu`, but `torch.cuda` should also be an option as sometimes use Colab) and write device-agnostic checks rather than hardcoding CUDA.
+- when creating quizzes, focus on concepts learned rather than just the code that is present in the notebook. Some pytorch questions can and should be asked, but only for the important elements. 
