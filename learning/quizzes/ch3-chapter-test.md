@@ -12,18 +12,18 @@ Concept-focused. Write your answers under each question, then ask me for feedbac
 per-token embedding (or a fixed-window model) cannot? Frame it in terms of what
 information a token's representation should capture.
 
-> _Your answer:_
+> _Your answer:_ At a high level, an attention mechanism allows inputs to attend to all the other tokens in their context. Previous approaches only processed one token (or a small window) at a time and therefore struggled with handling long distance dependencies and more complex context dependent tasks. A token's representation should capture information about tokens that are likely to appear in its context.
 
 **2.** Walk through the three steps that turn a sequence of input embeddings into context
 vectors: scores → weights → output. For each step, say what operation is applied and what
 the result represents.
 
-> _Your answer:_
+> _Your answer:_ Step 1: the dot product is taken between the input embeddings and the weight matrices W_q, W_k and W_v to get the query, key and value vectors. The attention scores are computed by taking the dot product of the query and key vectors Step 2: We then divide/scale the result by the dimension size of the key vectors, d_k and then compute the attention weights by taking the softmax of the resulting vectors. Step 3: We take the dot product of the attention weights and the value vectors to get the final context vectors. 
 
 **3.** Explain the distinct roles of the **query**, **key**, and **value** projections,
 and give two reasons we learn three *separate* matrices rather than reusing one.
 
-> _Your answer:_
+> _Your answer:_ The terms query, key and value are taken from concepts used in relational databases. The query is essential the "search term" or what we use to find what we are looking for. The key holds the info about the location about what we are searching for. Finally, the value holds the actual content of our search. We use three separate matrices instead of using one in order keep separate the weights which correspond to the distinct roles played the different projections. Having distinct query and key matrices means we can keep an asymetric relationship between the input token and the token we are comparing it with. Also, having a distinct value matrix means that we can decouple the relationship between two tokens and what the input token actually contributes itself.
 
 **4.** Attention scores are divided by √d_k before the softmax. Explain *why the magnitude
 of the scores grows with d_k* in the first place, and what specifically goes wrong in the
