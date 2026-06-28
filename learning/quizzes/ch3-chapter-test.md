@@ -29,19 +29,19 @@ and give two reasons we learn three *separate* matrices rather than reusing one.
 of the scores grows with d_k* in the first place, and what specifically goes wrong in the
 softmax (and in training) if you skip the scaling.
 
-> _Your answer:_
+> _Your answer:_ The magnitude of the scores grows with d_k because they are computed by multiplying the values in Q and K matrices, and d_k is the dimension size of the vectors in K. Therefore the larger d_k, the larger the magnitude of the attention score vector. The larger the magnitude of the attention scores, the more likely the softmax compute will become saturated, similar to a one-hot vector which during training can lead to vanishing gradients.
 
 **5.** What does "causal" mean in causal self-attention, why is it required for a
 text-*generation* model, and at which point in the forward pass is the mask applied? Why
 fill masked positions with `-inf` rather than `0`?
 
-> _Your answer:_
+> _Your answer:_ "Causal" in self-attention means essential predicting the next token based on previous tokens. Another term used is "autoregressive". During training it involves applying a causal mask which blocks out future token values from the model. This is done usually between computing the attention scores and the attention weights for a given token. Masked positions are filled with `-inf` instead of `0` so that they do not influence the softmax computation. When computing softmax, we raise `e` to the power of the value in the input (attention score) vector. `e` raised to the power of 0 is equal to 1 and as a result any zero values will be turned into non zero values after application of the softmax.
 
 **6.** In `CausalAttention` the mask is created with `register_buffer` rather than as an
 `nn.Parameter`. Explain the practical difference between the two and why a buffer is the
 right choice for the mask.
 
-> _Your answer:_
+> _Your answer:_ The mask is created with `register_buffer` as this method does not require the model to store any numerical weights which would add to the total size of the model. This is in contrast with using `nn.Parameter`, whose additional gradients would add to the computational cost of training the model.
 
 **7.** Dropout is applied to the attention weights. What is it doing conceptually, why is
 it active during training but disabled at inference, and what does inverted-dropout
