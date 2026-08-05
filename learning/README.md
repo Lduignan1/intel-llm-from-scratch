@@ -14,17 +14,17 @@ onto your implementation.
 
 ## Contents
 
-| Topic | Cheatsheet | Quiz |
-|-------|-----------|------|
-| Ch. 2 — Tokenization & data loading | [ch2-tokenization.md](cheatsheets/ch2-tokenization.md) | [ch2-quiz.md](quizzes/ch2-quiz.md) |
-| Ch. 3 — Attention | [ch3-attention.md](cheatsheets/ch3-attention.md) | [ch3-quiz.md](quizzes/ch3-quiz.md) |
-| Ch. 4 — GPT components | [ch4-gpt-components.md](cheatsheets/ch4-gpt-components.md) | [ch4-quiz.md](quizzes/ch4-quiz.md) |
+| Topic | Cheatsheet | Quiz | Chapter test |
+|-------|-----------|------|--------------|
+| Ch. 2 — Tokenization & data loading | [ch2-tokenization.md](cheatsheets/ch2-tokenization.md) | [ch2-quiz.md](quizzes/ch2-quiz.md) | — |
+| Ch. 3 — Attention | [ch3-attention.md](cheatsheets/ch3-attention.md) | [ch3-causal-attention-quiz.md](quizzes/ch3-causal-attention-quiz.md) | [ch3-chapter-test.md](quizzes/ch3-chapter-test.md) |
+| Ch. 4 — GPT model | [ch4-gpt-components.md](cheatsheets/ch4-gpt-components.md) | — | [ch4-chapter-test.md](quizzes/ch4-chapter-test.md) |
 
 ## Coverage status
 
 - [x] Ch. 2 — Working with text data
 - [x] Ch. 3 — Attention mechanisms
 - [x] Ch. 4 — GPT model components (LayerNorm, GELU, FeedForward)
-- [ ] Ch. 4 — Full transformer block + GPT assembly *(in progress in notebook)*
+- [x] Ch. 4 — Full transformer block + GPT assembly + text generation
 - [ ] Ch. 5 — Pretraining / training loop
 - [ ] Ch. 6 — Fine-tuning
