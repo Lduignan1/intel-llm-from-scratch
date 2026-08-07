@@ -18,7 +18,7 @@ for a language model; (b) what problem normalizing activations solves during tra
 all; and (c) why `scale` and `shift` are `nn.Parameter`s when the whole point was to force
 mean 0 and variance 1. Finally, what would break if `self.eps` were removed?
 
-> _Your answer:_
+> _Your answer:_ (a) Given an input `x` of shape `(batch, tokens, emb_dim)` `LayerNorm` averages together the values of the embedding dimension. Batch normalization on the other hand normalizes inputs along the batch dimension. Batches sizes can vary greatly in LLM training depending on training infrastructure and compute resources. Since `LayerNorm` only normalizes along the feature dimension, the compute cost remains the same regardless of batch size. (b) Normalizing activations is done to stabilize model training by reducing the risk the vanishing or exploding gradients. Extreme values are compressed as embedding vectors have a variance of 1 and a mean of 0. (c) `scale` and `shift` are additional parameters that the model learns during training which are automatically adjusted if doing so increases performance. Removing `self.eps` risks breaking the computation of the normalized x input as it prevents division by 0.
 
 **2.** `FeedForward` expands `emb_dim` → `4 * emb_dim`, applies `GELU`, then projects back
 down to `emb_dim`. Explain (a) what the expansion-and-contraction accomplishes that a
