@@ -26,7 +26,7 @@ single `Linear(emb_dim, emb_dim)` could not; and (b) why GELU rather than ReLU â
 specific about what GELU does with *negative* inputs and why that property matters for
 gradient-based learning. What is the significance of GELU being smooth everywhere?
 
-> _Your answer:_
+> _Your answer:_ `FeedForward` expands `emb_dim` to compute richer non-linear features in a higher dimensional space that would not be possible with a single linear layer. GELU is used instead of ReLU as it is a smooth activation function while ReLU is simply max(0, x). This means that negative values are equal to zero and do not contribute to learning with ReLU. GELU on the other handle has nonzero almost everywhere which means that even negative inputs values contribute to the training process, albeit to a lesser extent.
 
 **3.** In the notebook, `print_gradients` on `ExampleDeepNeuralNetwork` gave gradient means
 around `0.0002` for the first layer without shortcuts, versus `0.22` with them. Explain
