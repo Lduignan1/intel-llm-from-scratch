@@ -26,7 +26,7 @@ single `Linear(emb_dim, emb_dim)` could not; and (b) why GELU rather than ReLU â
 specific about what GELU does with *negative* inputs and why that property matters for
 gradient-based learning. What is the significance of GELU being smooth everywhere?
 
-> _Your answer:_ `FeedForward` expands `emb_dim` to compute richer non-linear features in a higher dimensional space that would not be possible with a single linear layer. GELU is used instead of ReLU as it is a smooth activation function while ReLU is simply max(0, x). This means that negative values are equal to zero and do not contribute to learning with ReLU. GELU on the other handle has nonzero almost everywhere which means that even negative inputs values contribute to the training process, albeit to a lesser extent.
+> _Your answer:_ `FeedForward` expands `emb_dim` to compute richer non-linear features in a higher dimensional space that would not be possible with a single linear layer. GELU is used instead of ReLU as it is a smooth activation function while ReLU is simply max(0, x). This means that negative values are equal to zero and do not contribute to learning with ReLU. GELU on the other handle has nonzero gradients almost everywhere which means that even negative inputs values contribute to the training process, albeit to a lesser extent.
 
 **3.** In the notebook, `print_gradients` on `ExampleDeepNeuralNetwork` gave gradient means
 around `0.0002` for the first layer without shortcuts, versus `0.22` with them. Explain
@@ -37,7 +37,7 @@ normalization is applied *before* the attention and feed forward sub-layers rath
 after. What is that arrangement called, and why is the input shape of a block necessarily
 identical to its output shape?
 
-> _Your answer:_
+> _Your answer:_ (a) Backpropagation is based on the chain rule in which partial derivatives of the weight parameters are multiplied all the way back through the network in order to compute gradients. Therefore, small values will get smaller and smaller the further back you go in the network and the opposite is true for large gradients. Adding `x + shortcut` after `MultiHeadAttention` and `FeedForward` modules of `TransformerBlock` helps prevent vanishing gradients by keeping them relatively large. (b) This matters more for 12-layer `GPTModel` than a 2-layer one as the vanishing gradients problem is exascerbated by deep models that have more gradients to compute. (c) The layer normalization implemented in `TransformerBlock` is known as Pre-LN, which leads to more stable training than applying it after the attention and FFN blocks. The input shape of a block must be identical to its output shape that multiple blocks can be stacked upon each other and so the output of one block becomes the input of the next. 
 
 **4.** Consider the assembled `GPTModel`. (a) Walk through what happens to `in_idx` from
 token IDs to the final logits tensor, naming each component and saying why `tok_emb` and
@@ -50,7 +50,7 @@ figure. (d) The exercise found ~56.7M parameters in the feed forward modules ver
 in the attention modules â€” roughly 2:1. Explain why that ratio falls out of the
 architecture.
 
-> _Your answer:_
+> _Your answer:_ (a) Tokenized input ids `in_idx` are first converted into trainable vector embeddings via the lookup table `tok_emb`. Positional embeddings `pos_emb` are then added to these tokens. Some parameters are zeroed out via the embedding dropout module `drop_emb`. These embeddings are then passed through a series of `TransformerBlock`s resulting in context vectors. These outputs are passed through a final LayerNorm layer `final_norm` and then passed through a linear layer `out_head` to get vectors of length `vocab_size`. The values in these vectors are known as `logits`. 
 
 **5.** Consider `generate_text_simple`. (a) Why must the function loop and re-run the model
 for each new token, rather than producing `max_new_tokens` outputs in a single forward
