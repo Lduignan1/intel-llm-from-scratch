@@ -19,6 +19,7 @@ onto your implementation.
 | Ch. 2 — Tokenization & data loading | [ch2-tokenization.md](cheatsheets/ch2-tokenization.md) | [ch2-quiz.md](quizzes/ch2-quiz.md) | — |
 | Ch. 3 — Attention | [ch3-attention.md](cheatsheets/ch3-attention.md) | [ch3-causal-attention-quiz.md](quizzes/ch3-causal-attention-quiz.md) | [ch3-chapter-test.md](quizzes/ch3-chapter-test.md) |
 | Ch. 4 — GPT model | [ch4-gpt-components.md](cheatsheets/ch4-gpt-components.md) | — | [ch4-chapter-test.md](quizzes/ch4-chapter-test.md) |
+| Ch. 5 — Pretraining on unlabeled data | — | [ch5-quiz.md](quizzes/ch5-quiz.md) | — |
 
 ## Coverage status
 
@@ -26,5 +27,5 @@ onto your implementation.
 - [x] Ch. 3 — Attention mechanisms
 - [x] Ch. 4 — GPT model components (LayerNorm, GELU, FeedForward)
 - [x] Ch. 4 — Full transformer block + GPT assembly + text generation
-- [ ] Ch. 5 — Pretraining / training loop
+- [x] Ch. 5 — Pretraining / training loop, decoding strategies, checkpointing
 - [ ] Ch. 6 — Fine-tuning
