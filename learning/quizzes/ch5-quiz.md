@@ -10,6 +10,7 @@ feedback.
 **1.** Cross-entropy loss is described as the "negative average log probability". Walk
 through what the model's output has to be turned into for that phrase to be literally
 true, and say why the *negative* and the *log* are both there.
+> For a given batch of inputs, the model outputs real values called logits stored in vectors of length vocab_size. These logits are turned into probabilities via the softmax function. We then take the probabilities of the target tokens and apply the logarithm to make these values more manageable for optimization. We then have a vector of log probabilities which we take the average of to get a singular value. As is common practice in machine learning, the average log probability is multiplied by -1 so that the goal becomes bring the value down to 0 through training, instead of up to it.
 
 **2.** A loss of 10.79 corresponds to a perplexity of about 48,725. What does the
 perplexity number mean in concrete terms, and why is it easier to interpret than the loss?
