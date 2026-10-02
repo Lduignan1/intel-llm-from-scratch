@@ -10,10 +10,12 @@ feedback.
 **1.** Cross-entropy loss is described as the "negative average log probability". Walk
 through what the model's output has to be turned into for that phrase to be literally
 true, and say why the *negative* and the *log* are both there.
-> For a given batch of inputs, the model outputs real values called logits stored in vectors of length vocab_size. These logits are turned into probabilities via the softmax function. We then take the probabilities of the target tokens and apply the logarithm to make these values more manageable for optimization. We then have a vector of log probabilities which we take the average of to get a singular value. As is common practice in machine learning, the average log probability is multiplied by -1 so that the goal becomes bring the value down to 0 through training, instead of up to it.
+> For a given batch of inputs, the model outputs real values called logits stored in vectors of length vocab_size. These logits are turned into probabilities via the softmax function. We then take the probabilities of the target tokens and apply the logarithm to make these values more manageable for optimization. We then have a vector of log probabilities which we take the average of to get a singular value. As is common practice in machine learning, the average log probability is multiplied by -1 (to get a positive value) so that the goal becomes bringing the value down to 0 through training, instead of up from a negative one.
 
 **2.** A loss of 10.79 corresponds to a perplexity of about 48,725. What does the
 perplexity number mean in concrete terms, and why is it easier to interpret than the loss?
+
+> Loss is an arbitrary value. The lower the better, but it can be hard to interpret it on its own. Perplexity is another metric used to evaluate the performance of language models. The perplexity score represents the number of token candidates that the model could generate at each next token prediction step. A perplexity of about 48,725 is obviously quite large and indicates that the model is very uncertain about what next token to generate. 
 
 **3.** In `calc_loss_batch` the logits are reshaped with `logits.flatten(0, 1)` and the
 targets with `target_batch.flatten()`. What shapes go in and come out, and why does
