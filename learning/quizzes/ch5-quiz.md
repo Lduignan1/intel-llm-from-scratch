@@ -21,6 +21,8 @@ perplexity number mean in concrete terms, and why is it easier to interpret than
 targets with `target_batch.flatten()`. What shapes go in and come out, and why does
 `cross_entropy` require this?
 
+> The initial output of the GPTModel `logits`, is of shape [batch_size, seq_len, vocab_size]. For `cross_entropy` to work, we must combine the `logits` tensor over the batch size dimention with `logits.flatten(0, 1)` to get a shape of [batch_size x seq_len, vocab_size]. The `targets` tensor is transformed from size [batch_size, seq_len] to size [batch_size x seq_len]. The Pytorch function requires inputs of size [batch_size, num_classes] and targets of size [batch_size]. In our case, batch_size * seq_len is the effective batch size for Pytorch as it is a grouping of inputs which each are of length vocab_size, the number of possible classes (tokens) that can be predicted. 
+
 **4.** You split "The Verdict" 90/10 into train and validation sets. What can the
 validation loss tell you that the training loss alone cannot?
 
