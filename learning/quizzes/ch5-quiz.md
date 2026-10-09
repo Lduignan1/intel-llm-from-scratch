@@ -26,12 +26,18 @@ targets with `target_batch.flatten()`. What shapes go in and come out, and why d
 **4.** You split "The Verdict" 90/10 into train and validation sets. What can the
 validation loss tell you that the training loss alone cannot?
 
+> The validation set tells you how the model performs on unseen, in-domain data. The loss on the train data is expected naturally decrease over the specified number of epochs as the model is being test on the examples it has been trained on, effectively memorizing them. The loss on the validation set generally flattens out before and remains above that on the train set. The validation score is a better indication of how the model will perform in practice. 
+
 **5.** `evaluate_model` calls both `model.eval()` and `torch.no_grad()`. These do two
 different things — what does each one switch off, and what would go wrong if you forgot
 either?
 
+> Setting `model.eval()` turns off dropout which is an option that zeroes out a specified percentage of neurons in the network. This is useful during training when we want to avoid cases in which the model overrelies on a few neurons but it is not useful during model inference and could actually hurt performance. The other setting, `torch.no_grad()` turns off tensor gradient accumulation which is needed for backpropagation during training, but would unncessarily add extra compute resource overhead (therefore a slowdown) during inference.
+
 **6.** Each batch in `train_model_simple` runs `optimizer.zero_grad()`, then
 `loss.backward()`, then `optimizer.step()`. What breaks if you drop the `zero_grad()` call?
+
+> 
 
 **7.** Training for 10 epochs on a 5,145-token corpus, the training loss keeps falling
 while the validation loss flattens and then rises. What is happening, and why is this
