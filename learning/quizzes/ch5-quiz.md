@@ -37,15 +37,19 @@ either?
 **6.** Each batch in `train_model_simple` runs `optimizer.zero_grad()`, then
 `loss.backward()`, then `optimizer.step()`. What breaks if you drop the `zero_grad()` call?
 
-> 
+> If you drop the `zero_grad()` call, then Pytorch will not delete the accumulated gradients from the previous optimizer step. The next weight update will then be perturbed by the previously saved gradients and training will collapse.
 
 **7.** Training for 10 epochs on a 5,145-token corpus, the training loss keeps falling
 while the validation loss flattens and then rises. What is happening, and why is this
 dataset almost guaranteed to produce it?
 
+> The reason why the loss keeps falling on the train corpus but flattens and starts to go up on the validation is because the model is overfitting (memorizing the training data). A 5,145 token corpus is extremely small for a pretraining corpus as models are generally trained on billions or even trillions of tokens at this stage in order to learn sufficient general capabilities.
+
 **8.** `generate_text_simple` picks the next token with `argmax`. Replacing that with
 `torch.multinomial` over the softmax probabilities changes the model's behaviour — what do
 you gain, and what do you give up?
+
+> By replacing `argmax` with `torch.multinomial` in `generate_text_simple`, we switch from deterministic to probabilistic token sampling.
 
 **9.** Temperature scaling divides the logits by a positive number before the softmax.
 Describe the effect of a temperature above 1 versus below 1, and what the distribution
